@@ -125,7 +125,6 @@ if __name__ == "__main__":
             pred = model.predict({"input_0":test_x[0], "input_1":test_x[1], "input_2":test_x[2], "input_3":test_x[3], "input_4":test_x[4]}, batch_size = 1)
 
             ps_pred_ave = 0
-            ps_low_ave = 0
 
             for p in range(len(test_y)):
                 pred[p][pred[p] > 1] = 1
