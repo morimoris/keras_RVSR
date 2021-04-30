@@ -17,7 +17,7 @@ class datacreate:
                 video_path,   #切り取る動画が入ったファイルのpath
                 data_number,  #データセットの生成数
                 cut_frame,    #1枚の画像から生成するデータセットの数
-                cut_height,   #LRの保存サイズ
+                cut_height,   #HRの保存サイズ
                 cut_width,
                 ext='jpg'):
 
@@ -50,26 +50,23 @@ class datacreate:
                 gray_img = color_img[:, :, 0]
 
                 low_bi = cv2.resize(gray_img , (int(width // self.mag), int(height // self.mag)), interpolation=cv2.INTER_CUBIC)
-                # low_bi = cv2.resize(low_bi , (int(width), int(height)), interpolation = cv2.INTER_CUBIC)
 
                 cut_low_bi = low_bi[ram_h : ram_h + low_cut_height, ram_w: ram_w + low_cut_width]
                 low_data_list[0].append(cut_low_bi)
-                # print(len(cut_low_bi[0]))
+
                 for op in range(self.LR_num - 1):
                     img = cv2.imread(photo_files[photo_num + op + 1])
                     color_img = cv2.cvtColor(img, cv2.COLOR_BGR2YCrCb)
                     gray_img = color_img[:, :, 0]
 
                     low_bi = cv2.resize(gray_img , (int(width // self.mag), int(height // self.mag)), interpolation=cv2.INTER_CUBIC)
-                    # low_bi = cv2.resize(low_bi , (int(width), int(height)), interpolation = cv2.INTER_CUBIC)
 
                     cut_low_bi = low_bi[ram_h : ram_h + low_cut_height, ram_w: ram_w + low_cut_width]
                     low_data_list[op + 1].append(cut_low_bi)
-                    # print(len(cut_low_bi[op + 1]))
 
                     if op == self.LR_num // 2 - 1:
                         high_data_list.append(gray_img[ram_h * self.mag : ram_h * self.mag + cut_height, ram_w * self.mag : ram_w * self.mag + cut_width])
-                        # print(len(high_data_list[0]))
+
                 self.num += 1
 
                 if self.num == data_number:
