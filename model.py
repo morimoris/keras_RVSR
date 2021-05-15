@@ -33,11 +33,11 @@ def RVSR(input_LR_num, input_channels, mag):
     output_list = (input_LR_num // 2 + 1) * [None]
 
     for img in range(input_LR_num): 
-        input_list.append(Input(shape = (None, None, input_channels), name = "input_" + str((img))))
+        input_list[i] = Input(shape = (None, None, input_channels), name = "input_" + str((img)))
 
     for num in range(0, input_LR_num // 2 + 1):
         output = ESPCN(input_list[input_LR_num // 2 - num : input_LR_num // 2 + num + 1], input_channels, mag)
-        output_list.append(output)
+        output_list[num] = output
     
     Tem_agg_model = Average()(output_list)
 
